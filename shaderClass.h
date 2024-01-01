@@ -22,6 +22,11 @@ public:
 	void Activate();
 	// Deletes the Shader Program
 	void Delete();
+
+private:
+
+	// used to check if different shaders have compiled successfully
+	void compileErrors(unsigned int shader, const char* type);
 };
 
 #endif // !SHADER_CLASS_H
