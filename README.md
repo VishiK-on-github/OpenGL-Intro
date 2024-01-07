@@ -1,2 +1,3 @@
-This project contains code on how to render 2D and 3D objects using OpenGL
+This repo contains code and notes for using OpenGL.
+Based on tutorials by victor gordan
 
