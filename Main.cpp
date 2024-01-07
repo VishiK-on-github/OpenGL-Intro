@@ -11,6 +11,7 @@
 #include"VAO.h"
 #include"VBO.h"
 #include"EBO.h"
+#include"Camera.h"
 
 const unsigned int height = 800;
 const unsigned int width = 800;
@@ -95,16 +96,9 @@ int main() {
 	VBO1.Unbind();
 	EBO1.Unbind();
 
-	// get ID of uniform called "scale"
-	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
-
 	//  Texture
 	Texture popCat("./nyan_cat.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	popCat.texUnit(shaderProgram, "tex0", 0);
-
-	// variables to help set rotation
-	float rotation = 0.0f;
-	double prevTime = glfwGetTime();
 
 	// opengl by default doesnt know triangle to 
 	// boot on top of which one hence the weird render 
@@ -112,6 +106,11 @@ int main() {
 	// enables the depth buffer
 	glEnable(GL_DEPTH_TEST);
 
+	// to enable vsync otherwise camera is unusable
+	glfwSwapInterval(1);
+
+	// creating camera object
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
 	// respond to events perfomed before window is closedj
 	while (!glfwWindowShouldClose(window)) {
@@ -124,43 +123,12 @@ int main() {
 		// Tell OpenGL which Shader Program we want to use
 		shaderProgram.Activate();
 
-		// timer code block
-		double currentTime = glfwGetTime();
+		// to handler camera inputs
+		camera.Inputs(window);
 
-		// updating rotation based on time difference
-		if (currentTime - prevTime >= 1.0f / 60.0f) {
-			rotation += 0.5f;
-			prevTime = currentTime;
-		}
+		// send info of camera matrix to vertex shader
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 
-		// init identity matrices
-		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 proj = glm::mat4(1.0f);
-
-		// rotating the model with texture with time
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-
-		// before this all the objects - model, world, camera are at origin
-		// we need to move the camera instead we move the world itself
-		view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-		// here we set clipping - from how close or till how far camera
-		// can see something
-		proj = glm::perspective(glm::radians(45.0f), (float)(width / height), 0.1f, 100.0f);
-
-		// setting variables for the vertex shaders
-		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-
-		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
-
-
-		// Assigns a value to var uniform. Must use uniform only after activating shader program
-		glUniform1f(uniID, 0.5f);
 		// binding the texture
 		popCat.Bind();
 		// Bind the VAO so OpenGL knows to use it. 

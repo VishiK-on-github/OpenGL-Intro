@@ -19,14 +19,12 @@ out vec2 texCoord;
 uniform float scale;
 
 // matrices needed for 3D view with perspective
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 proj;
+uniform mat4 camMatrix;
 
 void main()
 {
 	// Outputs the positions/coordinates of all vertices
-   gl_Position = proj * view * model * vec4(aPos, 1.0);
+   gl_Position = camMatrix * vec4(aPos, 1.0);
    // Assigns the colors from the Vertex Data to "color"
    color = aColor;
    // Assigns the texture coordinates from the Vertex Data to "texCoord"
