@@ -13,3 +13,13 @@ What are shaders ?
 
 - Functions which run on the GPU. Takes an input give an output. 
 - In our case its a shader is openGLs shader language called GLSL
+
+Standard 3D matrices:
+
+1. model matrix: transforms from local coords (a particular objects coords) to world coords
+2. view matrix: from world coords to how a camera sees it
+3. projection matrix: view coords to clip coords (find more info)
+
+projected to screen coordinates automatically
+
+GLM helps us make these matrices
