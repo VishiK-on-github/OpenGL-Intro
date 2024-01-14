@@ -18,7 +18,8 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 	glGenTextures(1, &ID);
 
 	// assign the texture to a texture unit
-	glActiveTexture(slot);
+	glActiveTexture(GL_TEXTURE0 + slot);
+	unit = slot;
 	glBindTexture(texType, ID);
 
 	// configuring type of algo used to make text smaller / larger
@@ -56,6 +57,7 @@ void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit) {
 
 // binding the texture
 void Texture::Bind() {
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(type, ID);
 }
 

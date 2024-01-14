@@ -93,5 +93,11 @@
     <Image Include="C:\Users\vck28\Downloads\nyan_cat.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
+    <Image Include="C:\Users\vck28\Downloads\planks.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="C:\Users\vck28\Downloads\planksSpec.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

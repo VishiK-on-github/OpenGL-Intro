@@ -165,6 +165,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\vck28\Downloads\nyan_cat.png" />
+    <Image Include="C:\Users\vck28\Downloads\planks.png" />
+    <Image Include="C:\Users\vck28\Downloads\planksSpec.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
