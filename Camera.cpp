@@ -7,7 +7,7 @@ Camera::Camera(int width, int height, glm::vec3 position) {
 	Position = position;
 }
 
-void Camera::Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shader, const char* uniform) {
+void Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane) {
 
 	// creating identity matrices 
 	glm::mat4 view = glm::mat4(1.0f);
@@ -15,11 +15,18 @@ void Camera::Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shade
 
 	// to make camera look from and to correct direction
 	view = glm::lookAt(Position, Position + Orientation, Up);
+
 	// to add perspective to scene
 	projection = glm::perspective(glm::radians(FOVdeg), (float)(width / height), nearPlane, farPlane);
 
+	// set the new camera matrix
+	cameraMatrix = projection * view;
+}
+
+void Camera::Matrix(Shader& shader, const char* uniform) {
+
 	// exporting camera matrix to the vertex shader
-	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(projection * view));
+	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(cameraMatrix));
 }
 
 void Camera::Inputs(GLFWwindow* window) {
