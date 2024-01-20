@@ -15,12 +15,13 @@ public:
 	std::vector <Vertex> vertices;
 	std::vector <GLuint> indices;
 	std::vector <Texture> textures;
-
+	// Store VAO in public so it can be used in the Draw function
 	VAO VAO;
 
 	// constructor for mesh class
 	Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures);
 
+	// draw the mesh
 	void Draw(Shader& shader, Camera& camera);
 };
 
