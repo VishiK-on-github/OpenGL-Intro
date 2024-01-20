@@ -23,3 +23,7 @@ Standard 3D matrices:
 projected to screen coordinates automatically
 
 GLM helps us make these matrices
+
+Mesh:
+
+A mesh has vertices, indices and sometimes textures
